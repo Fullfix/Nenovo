@@ -7,12 +7,13 @@ const secret = process.env.SECRET_KEY
 
 
 const UserSchema = mongoose.Schema({
-    username: {
+    email: {
         type: String,
         lowercase: true,
         match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
         index: true,
-        required: true,
+        required: [true, 'cannot be blank'],
+        match: [/\S+@\S+\.\S+/, 'is invalid'],
         unique: true
     },
     hash: {
@@ -52,14 +53,14 @@ UserSchema.methods.generateJWT = function() {
 
     return jwt.sign({
         id: this._id,
-        username: this.username,
+        email: this.email,
         exp: parseInt(exp.getTime() / 1000)
     }, secret)
 }
 
 UserSchema.methods.toAuthJSON = function() {
     return {
-        username: this.username,
+        email: this.email,
         token: this.generateJWT()
     }
 }
