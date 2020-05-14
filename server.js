@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const User = require('./models/User')
 const bodyParser = require('body-parser')
 const {isNewSessionRequired, isAuthRequired, verifyToken} = require('./services/authUtils')
+var cors = require("cors");
 
 require('dotenv/config')
 require('./models/Article')
@@ -13,6 +14,7 @@ const port = 3000
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 
 // Validate JWT token if needed
