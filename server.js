@@ -13,9 +13,22 @@ require('./models/Category')
 const app = express()
 const port = 3001
 
+const whiteList = ['http://localhost:3000', 'http://localhost:3001']
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (whiteList.indexOf(origin) !== -1) {
+            callback(null, true)
+        }
+        else {
+            console.log("CORS")
+            callback(new Error('YOU SHALL NOT PASS'))
+        }
+    }
+}
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 
 // Validate JWT token if needed

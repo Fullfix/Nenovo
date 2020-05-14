@@ -5,6 +5,7 @@ const { verifyPassword } = require('../services/authUtils')
 
 // authentication
 router.post('/authenticate', async (req, res, next) => {
+    console.log(req.body)
     if (!req.body.email || !req.body.password) {
         return res.status(400).send({
             ok: false,
