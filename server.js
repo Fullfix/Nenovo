@@ -14,7 +14,9 @@ const port = 3000
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.user(async (req, res, next) => {
+
+// Validate JWT token if needed
+app.use(async (req, res, next) => {
     let apiUrl = req.originalUrl
     let httpMethod = req.method
     req.session = {}
@@ -56,6 +58,7 @@ app.user(async (req, res, next) => {
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
+// Handle response, add token if needed
 app.use(async (req, res, next) => {
     if (!res.data) {
         return res.status(404).send({

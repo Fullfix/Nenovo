@@ -10,7 +10,7 @@ const authRoutes = [
     {path: '/api/article/watch', method: 'POST'},
     {path: '/api/user/changekeywords', method: 'PUT'}
 ]
-let exports = module.exports = {}
+// let exports = module.exports = {}
 
 exports.isNewSessionRequired = (httpMethod, url) => {
     for (let routeObj of newSessionRoutes) {
