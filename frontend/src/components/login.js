@@ -39,16 +39,15 @@ class Login extends React.Component {
         let password = document.getElementById('password').value;
         fetch('http://localhost:3001/user/authenticate', {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 email: 'fqffq@fwfw.ry',
                 password: 'weffew'
-            }
+            })
           })
-          .then(res => console.log(res))
+          .then(res => res.json()).then(res => console.log(res))
           .catch(err => {
               console.log(err)
           });
