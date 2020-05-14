@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken')
 require('dotenv/config')
 const secret = process.env.SECRET_KEY
 const newSessionRoutes = [
-    {path: '/api/user/authenticate', method: 'POST'},
+    {path: '/user/authenticate', method: 'POST'},
 ]
 const authRoutes = [
-    {path: '/api/article/recommended', method: 'GET'},
-    {path: '/api/article/watch', method: 'POST'},
-    {path: '/api/user/changekeywords', method: 'PUT'}
+    {path: '/article/recommended', method: 'GET'},
+    {path: '/article/watch', method: 'POST'},
+    {path: '/user/changekeywords', method: 'PUT'}
 ]
 // let exports = module.exports = {}
 
