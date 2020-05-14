@@ -32,10 +32,15 @@ exports.isAuthRequired = (httpMethod, url) => {
 
 exports.verifyToken = (jwtToken) => {
     try {
-        jwt.verify(jwtToken, secret)
+        return jwt.verify(jwtToken, secret)
     }
     catch(e) {
         console.log(`e: ${e}`)
         return null
     }
+}
+
+exports.verifyPassword = (password) => {
+    let passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
+    return password.match(passw)
 }

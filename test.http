@@ -1,0 +1,7 @@
+POST http://localhost:3001/user/authenticate
+Content-Type: application/json
+
+{
+    "email": "nrk1an@gi.lcom",
+    "password": "FiveNights1234"
+}

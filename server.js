@@ -4,6 +4,7 @@ const User = require('./models/User')
 const bodyParser = require('body-parser')
 const cors = require("cors");
 const {isNewSessionRequired, isAuthRequired, verifyToken} = require('./services/authUtils')
+const user = require('./routes/user')
 
 require('dotenv/config')
 require('./models/Article')
@@ -59,6 +60,7 @@ app.use(async (req, res, next) => {
 })
 
 app.get('/', (req, res) => res.send('Hello World!'))
+app.use('/user', user)
 
 // Handle response, add token if needed
 app.use(async (req, res, next) => {
@@ -98,6 +100,6 @@ app.use(async (req, res, next) => {
 app.listen(port, () => console.log(`Example app listening on port port!`))
 mongoose.connect(
     process.env.DB_CONNECTION,
-    { useNewUrlParser: true },
+    { useNewUrlParser: true, useUnifiedTopology: true },
     (err) => console.log('connected to DB!!!')
 )
