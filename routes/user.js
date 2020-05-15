@@ -94,4 +94,34 @@ router.post('/register', async (req, res, next) => {
     next()
 })
 
+router.put('/changekeywords', async (req, res, next) => {
+    if (!req.body.keywords) {
+        return res.status(400).send({
+            ok: false,
+            error: {
+                reason: 'Missing keywods',
+                code: 400
+            }
+        })
+    }
+    try {
+        let user = await User.findById(req.session.userData.id)
+        await user.set({data: {keyWords: req.body.keywords}})
+        await user.save()
+    }
+    catch (e) {
+        return res.status(400).send({
+            ok: false,
+            error: {
+                reason: e.message || e.errmsg,
+                code: 400
+            }
+        })
+    }
+    res.data = {
+        keywords: req.body.keywords
+    }
+    next()
+})
+
 module.exports = router
