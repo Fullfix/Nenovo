@@ -73,7 +73,7 @@ app.use(async (req, res, next) => {
 })
 
 app.get('/', (req, res) => res.send('Hello World!'))
-app.use('/user', user)
+app.use('/api/user', user)
 
 // Handle response, add token if needed
 app.use(async (req, res, next) => {
