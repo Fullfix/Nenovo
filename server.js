@@ -6,6 +6,7 @@ const cors = require("cors");
 const {isNewSessionRequired, isAuthRequired, verifyToken} = require('./services/authUtils')
 const user = require('./routes/user')
 const category = require('./routes/category')
+const article = require('./routes/article')
 
 const updateNews = require('./scripts/updateNews')
 const getArticles = require('./scripts/getArticles')
@@ -86,6 +87,7 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/api/user', user)
 app.use('/api/category', category)
+app.use('/api/article', article)
 
 // Handle response, add token if needed
 app.use(async (req, res, next) => {
