@@ -1,1 +1,6 @@
-GET http://localhost:3001/api/category/names
+GET http://localhost:3001/api/category/articles
+Content-Type: application/json
+
+{
+    "name": "internet"
+}
