@@ -1,7 +1,7 @@
-PUT http://localhost:3001/api/user/changekeywords
+POST http://localhost:3001/api/user/log
 Content-Type: application/json
-Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYmU3NjNiNTNiODFkMzVkZjVjMWQyMyIsImVtYWlsIjoibmJyZXNrYW51NzNAZ21haWwuY29tIiwiZXhwIjoxNTk0NzI0NDQ2LCJpYXQiOjE1ODk1NDA0NDZ9.lBv0WfeuQQoTEXyUlgpjdIjKivUHQyRHDS8pqX2k2J4
 
 {
-    "keywords": ["1", "2"]
+    "email": "nbreskanu73@gmail.com",
+    "password": "FiveNights1234"
 }

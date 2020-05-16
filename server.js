@@ -6,6 +6,16 @@ const cors = require("cors");
 const {isNewSessionRequired, isAuthRequired, verifyToken} = require('./services/authUtils')
 const user = require('./routes/user')
 
+const updateNews = require('./scripts/updateNews')
+const getArticles = require('./scripts/getArticles')
+
+// updateNews()
+// const shit = async () => {
+//     art = await getArticles()
+//     console.log(art.internet)
+// }
+// shit()
+
 require('dotenv/config')
 require('./models/Article')
 require('./models/Category')
