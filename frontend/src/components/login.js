@@ -1,13 +1,9 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
     Link,
-    useRouteMatch,
     Redirect
   } from "react-router-dom";
-import { json } from 'body-parser';
+import Cookies from 'js-cookie'
 
 class Login extends React.Component {
     constructor(props) {
@@ -18,11 +14,11 @@ class Login extends React.Component {
         let login = document.getElementById('login').value;
         let password = document.getElementById('password').value;
         console.log('sho za dich')
-        if (login == "" || password == ""){
+        if (login === "" || password === ""){
           this.setState({apiResponse: "Not"})
         }
         else {
-        fetch('http://localhost:3001/user/authenticate', {
+        fetch('http://localhost:3001/api/user/authenticate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -33,10 +29,12 @@ class Login extends React.Component {
             })
           })
           .then(res => res.json()).then(res => {
-            if(JSON.parse(JSON.stringify(res)).error != undefined)
+            if(JSON.parse(JSON.stringify(res)).error !== undefined)
               this.setState({apiResponse: JSON.parse(JSON.stringify(res)).error.reason})
-            if(res.status)
-            this.setState({apiResponse: "OK"})
+            if(res.status){
+              this.setState({apiResponse: "OK"})
+              Cookies.set('token', res.response['session-token'], {expires: 1})
+            }
           })
           .catch(err => {
               console.log(err)
@@ -46,10 +44,10 @@ class Login extends React.Component {
   
     render() {
       let Error;
-      if (this.state.apiResponse == "User with this email does not exist") Error = "Пользователя с такой электронной почтой не существует."
-      else if (this.state.apiResponse == "Invalid password") Error = "Вы ввели неверный пароль."
-      else if (this.state.apiResponse == "Not") Error = "Не все поля заполнены"
-      else if (this.state.apiResponse == "OK") Error = <Redirect to={`/`}></Redirect>;
+      if (this.state.apiResponse === "User with this email does not exist") Error = "Пользователя с такой электронной почтой не существует."
+      else if (this.state.apiResponse === "Invalid password") Error = "Вы ввели неверный пароль."
+      else if (this.state.apiResponse === "Not") Error = "Не все поля заполнены"
+      else if (this.state.apiResponse === "OK") Error = <Redirect to={`/`}></Redirect>;
         return (
             <div className="logform">
                   <header className="rightSide-header">

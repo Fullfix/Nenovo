@@ -11,14 +11,16 @@ import {
 import Login from './login'
 import Register from './register'
 import Main from './main'
+import Err404 from './404'
+import './LogReg.css';
 
 const LoginPage = () => {
     let { path, url } = useRouteMatch();
-    console.log(path)
+    console.log(url)
     return(
         <div className="loginPage">
             <div className="leftSide">
-                <h1 className="left-title">НеНово</h1>
+                <Link className="left-title" to='/'><h1 >НеНово</h1></Link>
                 <div className="left-description">
                     <p>
                         <span style={{fontSize: 36 + 'px'}}>Входя или <span style={{color: 'white'}}>регистрируясь</span> на сайт, </span>
@@ -29,11 +31,12 @@ const LoginPage = () => {
             </div>
             <div className="rightSide">
                 <Switch>
-                    <Route path={`${path}/login`} component={Login} />
-                    <Route path={`${path}/register`} component={Register} />
-                    <Route exact path="/auth">
+                    <Route exact path={`${path}/login`} component={Login} />
+                    <Route exact path={`${path}/register`} component={Register} />
+                    <Route path="/auth">
                         <Redirect to={`${path}/login`}></Redirect>
                     </Route>
+                    
                 </Switch>
             </div>
         </div>

@@ -1,0 +1,68 @@
+.main-header {
+    width: calc(100% - 40px);
+    height: 60px;
+    background: #61C9A8;
+    position: sticky;
+    top: 0px;
+    padding: 0 20px 0 20px;
+}
+nav {
+    height: 100%;
+}
+.logo-place {
+    display: inline-block;
+    position: relative;
+}
+.logo {
+    color: black;
+    text-decoration: none;
+    transition: 1s;
+}
+.logo h1 {
+    margin-top: 14px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+.logo:hover {
+    color: white;
+}
+.recom {
+    color: black;
+    text-decoration: none;
+    transition: 1s;
+}
+.recom p {
+    margin-top: 14px;
+    margin-bottom: 0px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+}
+.lo {
+    margin-left: 5%;
+}
+.exit {
+    position: absolute;
+    right: 20px;
+}
+.exit p {
+    border: 0;
+    background: 0;
+    cursor: pointer;
+    margin-top: 19px;
+    margin-bottom: 0px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+}
+.exit button:focus {
+    outline: none;
+}
+.stick {
+    position: fixed;
+    width: 100px;
+    height: 5px;
+    top: 42px;
+    border-radius: 2px;
+    background: black;
+}

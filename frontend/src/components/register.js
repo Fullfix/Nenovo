@@ -1,13 +1,8 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
     Link,
-    useRouteMatch,
     Redirect
   } from "react-router-dom";
-import { json } from 'body-parser';
 
 class Register extends React.Component {
     constructor(props) {
@@ -19,12 +14,12 @@ class Register extends React.Component {
         let password = document.getElementById('password').value;
         let Podpassword = document.getElementById('pod-password').value;
         if (password !== Podpassword) this.setState({apiResponse: "No"})
-        else if (login == "" || password == "" || Podpassword == ""){
+        else if (login === "" || password === "" || Podpassword === ""){
             this.setState({apiResponse: "Not"})
         }
         else{
         console.log('sho za dich')
-        fetch('http://localhost:3001/user/register', {
+        fetch('http://localhost:3001/api/user/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -36,7 +31,7 @@ class Register extends React.Component {
             })
           })
           .then(res => res.json()).then(res => {
-            if(JSON.parse(JSON.stringify(res)).error != undefined)
+            if(JSON.parse(JSON.stringify(res)).error !== undefined)
               this.setState({apiResponse: JSON.parse(JSON.stringify(res)).error.reason})
             if(res.status)
             this.setState({apiResponse: "OK"})
@@ -49,10 +44,10 @@ class Register extends React.Component {
   
     render() {
         let Error;
-        if (this.state.apiResponse == "No") Error = "Пароли не совпадают."
-        else if (this.state.apiResponse == "Not") Error = "Не все поля заполнены"
-        else if (this.state.apiResponse == "Invalid passwrd. Must contain 6-20 numbers, 1 numeric and 1 uppercase digit") Error = "Неверный пароль, пароль должен содержать 6-20 символов, одну цифру и одну большую букву."
-        else if (this.state.apiResponse == "OK") Error = <Redirect to='./login'></Redirect>;
+        if (this.state.apiResponse === "No") Error = "Пароли не совпадают."
+        else if (this.state.apiResponse === "Not") Error = "Не все поля заполнены"
+        else if (this.state.apiResponse === "Invalid passwrd. Must contain 6-20 numbers, 1 numeric and 1 uppercase digit") Error = "Неверный пароль, пароль должен содержать 6-20 символов, одну цифру и одну большую букву."
+        else if (this.state.apiResponse === "OK") Error = <Redirect to='./login'></Redirect>;
         return (
             <div className="logform">
                   <header className="rightSide-header">

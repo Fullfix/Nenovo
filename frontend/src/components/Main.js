@@ -5,12 +5,23 @@ import {
     Route,
     Link
   } from "react-router-dom";
+import './main.css'
+import Header from './header'
 
 class Main extends React.Component {
-  
+    constructor(props) {
+      super(props);
+      this.state = {
+        apiResponse: "",
+        choosen: ""
+      }
+    }
     render() {
         return (
-            <h1>Main page</h1>
+          <>
+          <Header></Header>
+          <div></div>
+          </>
         );
     }
   }
