@@ -46,4 +46,16 @@ router.post('/watch', async (req, res, next) => {
     next()
 })
 
+router.get('/recent', async (req, res, next) => {
+    let date = new Date()
+    date.setDate(date.getDate() - 1)
+    let articles = await Article.find({
+        date: { $gte: date }
+    }).sort('-date').exec()
+    res.data = {
+        articles: articles
+    }
+    next()
+})
+
 module.exports = router

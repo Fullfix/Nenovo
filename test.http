@@ -1,7 +1,3 @@
-POST http://localhost:3001/api/article/watch
+GET http://localhost:3001/api/article/recent
 Content-Type: application/json
 Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYmU3NjNiNTNiODFkMzVkZjVjMWQyMyIsImVtYWlsIjoibmJyZXNrYW51NzNAZ21haWwuY29tIiwiZXhwIjoxNTk0ODIwNjU2LCJpYXQiOjE1ODk2MzY2NTZ9.YnvHGO2-axd9bW6WfcA1xpmmiISf0UcK7PcU7Yvp4IA
-
-{
-    "id": "5ebfb269cf23941bc9fe9477"
-}
