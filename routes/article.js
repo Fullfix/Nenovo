@@ -58,4 +58,41 @@ router.get('/recent', async (req, res, next) => {
     next()
 })
 
+router.get('/recommended', async (req, res, next) => {
+    let user = await User.findById(req.session.userData.id).exec()
+    let date = new Date()
+    date.setDate(date.getDay() - 3)
+    console.log(user)
+    let keywordSearch = user.data.keyWords.map(keyword => {
+        return {
+            $or: [
+                {
+                    text: { $regex: keyword, $options: 'i'}
+                },
+                {
+                    title: {$regex: keyword, $options: 'i'}
+                }
+            ]
+        }
+    })
+    console.log(keywordSearch)
+    let articles;
+    if (keywordSearch.length !== 0) {
+        articles = await Article.find({
+            $or: keywordSearch,
+            date: { $gte: date }
+        }).sort('-date').exec()
+    }
+    else {
+        articles = await Article.find({
+            date: { $gte: date }
+        }).sort('-date').exec()
+    }
+    res.data = {
+        keywords: user.data.keyWords,
+        articles: articles
+    }
+    next()
+})
+
 module.exports = router
