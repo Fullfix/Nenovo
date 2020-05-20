@@ -32,8 +32,8 @@ class Login extends React.Component {
             if(JSON.parse(JSON.stringify(res)).error !== undefined)
               this.setState({apiResponse: JSON.parse(JSON.stringify(res)).error.reason})
             if(res.status){
-              this.setState({apiResponse: "OK"})
               Cookies.set('token', res.response['session-token'], {expires: 1})
+              this.setState({apiResponse: "OK"})
             }
           })
           .catch(err => {

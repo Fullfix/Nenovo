@@ -9,6 +9,7 @@ import {
     Redirect
 } from "react-router-dom";
 import Anime, { anime } from 'react-anime'
+import Cookies from 'js-cookie'
 
 const Header = () => {
     const [width, setWidth] = React.useState(window.innerWidth);
@@ -29,6 +30,19 @@ const Header = () => {
             left: box.left + window.pageXOffset
         };
     }
+    let exitBut =""
+    if(Cookies.get('token') !== "") {
+        exitBut = 
+            <div className="logo-place lo exit">
+                <p onClick={() => {
+                    Cookies.set('token', "")
+                    document.location.reload(true);
+                }}>Выход</p>
+            </div>
+    }
+    else {
+        exitBut = ""
+    }
 
     return (
 
@@ -45,24 +59,19 @@ const Header = () => {
             <div className="logo-place lo">
                 <Link to='/' className="recom"><p id="res">Недавние</p></Link>
             </div>
-            <div className="logo-place lo exit">
-                <p onClick={() => {
-                    console.log('Здесь могла бы быть ваша реклама и апишка Бресканчика')
-                }}>Выход</p>
-            </div>
+            {exitBut}
             <Anime className='stick '
                 translateX={() => {
                     let mode = window.location.href.split('/')[3];
-                    console.log(getCoords(document.getElementById('res')).left)
-                    if (mode == "") return getCoords(document.getElementById('res')).left - 20
-                    else if (mode == "category") return getCoords(document.getElementById('cat')).left - 20
-                    else if (mode == "recommend") return getCoords(document.getElementById('rec')).left - 20
+                    if (mode === "") return getCoords(document.getElementById('res')).left - 20
+                    else if (mode === "category") return getCoords(document.getElementById('cat')).left - 20
+                    else if (mode === "recommend") return getCoords(document.getElementById('rec')).left - 20
                 }}
                 width={() => {
                     let mode = window.location.href.split('/')[3];
-                    if (mode == "") return document.getElementById('res').clientWidth
-                    else if (mode == "category") return document.getElementById('cat').clientWidth
-                    else if (mode == "recommend") return document.getElementById('rec').clientWidth
+                    if (mode === "") return document.getElementById('res').clientWidth
+                    else if (mode === "category") return document.getElementById('cat').clientWidth
+                    else if (mode === "recommend") return document.getElementById('rec').clientWidth
                 }}
             >
                 <div></div>

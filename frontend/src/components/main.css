@@ -66,3 +66,18 @@ nav {
     border-radius: 2px;
     background: black;
 }
+.item {
+    width: 250px;
+    height: 300px;
+    border: 1px solid black;
+}
+.item-pic img {
+    width: 100%;
+}
+.item-list {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, auto);
+}

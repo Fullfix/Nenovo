@@ -18,7 +18,6 @@ const App = () => {
             <Switch>
             <Route strict path="/auth" component={LoginPage} />
             <Route path="/" component={Main} />
-
             </Switch>
         </Router>
     )
