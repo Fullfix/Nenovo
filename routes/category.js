@@ -7,9 +7,9 @@ const { translateCategories } = require('../data')
 
 router.get('/names', async (req, res, next) => {
     const names = await Category.find({}, {name: 1}).exec();
-    names = names.map(cat => [cat.name, translateCategories[cat.name]]);
-    console.log(names);
-    res.data = names;
+    const categoryNames = names.map(cat => [cat.name, translateCategories[cat.name]]);
+    console.log(categoryNames);
+    res.data = categoryNames;
     return next();
 })
 

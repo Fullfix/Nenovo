@@ -1,9 +1,9 @@
-const getArticles = require('./getArticles')
-const updateDB = require('./updateDB')
+const getArticles = require('./getArticles');
+const updateDB = require('./updateDB');
 
 const updateNews = async () => {
-    let categoryArticles = await getArticles()
-    await updateDB(categoryArticles)
+    let categoryArticles = await getArticles();
+    await updateDB(categoryArticles);
 }
 
-module.exports = updateNews
+module.exports = updateNews;
