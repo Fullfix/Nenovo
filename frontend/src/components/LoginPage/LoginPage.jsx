@@ -7,7 +7,7 @@ import {
     Redirect
   } from "react-router-dom";
 import Login from '../Login/Login';
-import Register from '../register';
+import Register from '../Register/Register';
 import './LogReg.css';
 
 const LoginPage = () => {
