@@ -1,10 +1,9 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import {
     Link,
     Redirect
 } from "react-router-dom";
 import { login } from '../../helpers/auth';
-import { useEffect } from 'react';
 
 const loginReducer = (state, action) => {
     switch (action.type) {
@@ -57,8 +56,8 @@ const Login = (props) => {
                 <div className="LogLabel">
                     Электронная почта
                 </div>
-                <input className="LogInput" id="login" type="email"
-                required
+                <input className="LogInput" id="login" type="email" required
+                value={state.email}
                 onChange={(e) => dispatch({ 
                     type: 'email', 
                     value: e.target.value,
@@ -66,8 +65,8 @@ const Login = (props) => {
                 <div className="LogLabel">
                     Пароль
                 </div>
-                <input className="LogInput" id="password" type="password"
-                required
+                <input className="LogInput" id="password" type="password" required
+                value={state.password}
                 onChange={(e) => dispatch({ 
                     type: 'password',
                     value: e.target.value,

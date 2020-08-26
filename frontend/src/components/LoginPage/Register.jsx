@@ -66,6 +66,7 @@ const Register = (props) => {
                     Электронная почта
                 </div>
                 <input className="LogInput" id="login" type="email" required
+                value={state.email}
                 onChange={(e) => dispatch({ 
                     type: 'email',
                     value: e.target.value,
@@ -74,6 +75,7 @@ const Register = (props) => {
                     Пароль
                 </div>
                 <input className="LogInput" id="password" type="password" required
+                value={state.password}
                 onChange={(e) => dispatch({ 
                     type: 'password',
                     value: e.target.value,
@@ -82,6 +84,7 @@ const Register = (props) => {
                     Подтвердите пароль
                 </div>
                 <input className="LogInput" id="pod-password" type="password" required
+                value={state.password2}
                 onChange={(e) => dispatch({ 
                     type: 'password2',
                     value: e.target.value,
