@@ -1,17 +1,13 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link,
-    useParams,
     useRouteMatch,
     Redirect
   } from "react-router-dom";
-import Login from './login'
-import Register from './register'
-import Main from './main'
-import Err404 from './404'
+import Login from '../Login/Login';
+import Register from '../register';
 import './LogReg.css';
 
 const LoginPage = () => {
@@ -36,7 +32,6 @@ const LoginPage = () => {
                     <Route path="/auth">
                         <Redirect to={`${path}/login`}></Redirect>
                     </Route>
-                    
                 </Switch>
             </div>
         </div>
