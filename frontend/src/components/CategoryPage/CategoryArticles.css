@@ -1,0 +1,11 @@
+.category-articles {
+    position: relative;
+    flex-grow: 5;
+}
+
+.cat-articles-load {
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+}

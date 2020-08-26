@@ -81,3 +81,8 @@ nav {
     display: grid;
     grid-template-columns: repeat(auto-fit, auto);
 }
+
+.content {
+    height: calc(100% - 60px);
+    position: relative;
+}

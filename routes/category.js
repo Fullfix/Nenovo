@@ -13,7 +13,7 @@ router.get('/names', async (req, res, next) => {
     return next();
 })
 
-router.get('/articles', async (req, res, next) => {
+router.post('/articles', async (req, res, next) => {
     const categoryName = req.body.name;
     if (!categoryName) {
         res.data = { err: 'Missing parameter: name' };
