@@ -43,6 +43,10 @@ const Login = (props) => {
         if (state.isLogging) loginUser();
     }, [state.email, state.password, state.isLogging]);
 
+    if (state.loginSuccess) return (
+        <Redirect to="/"/>
+    )
+
     return (
         <div className="logform">
             <header className="rightSide-header">

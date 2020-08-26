@@ -52,6 +52,10 @@ const Register = (props) => {
         if (state.isRegistrating) registerUser();
     }, [state.email, state.password, state.password2, state.isRegistrating]);
 
+    if (state.registerSuccess) return (
+        <Redirect to="/"/>
+    )
+
     return (
         <div className="logform">
             <header className="rightSide-header">

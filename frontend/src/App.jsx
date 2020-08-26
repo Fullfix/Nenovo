@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import LoginPage from './components/LoginPage/LoginPage';
 import Main from './components/Main'
-import Err404 from './components/404'
 
 const App = () => {
     return(
