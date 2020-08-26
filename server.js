@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./models/User')
 const bodyParser = require('body-parser')
+const logger = require('morgan');
 const cors = require("cors");
 const {isNewSessionRequired, isAuthRequired, verifyToken} = require('./services/authUtils')
 const user = require('./routes/user')
@@ -40,93 +41,48 @@ const corsOptions = {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(logger('dev'));
+// app.use(cors());
 
-
-// Validate JWT token if needed
-app.use(async (req, res, next) => {
-    let apiUrl = req.originalUrl
-    let httpMethod = req.method
-    req.session = {}
-
-    if (isNewSessionRequired(httpMethod, apiUrl)) {
-        req.newSessionRequired = true
-    }
-    else if (isAuthRequired(httpMethod, apiUrl)) {
-        let authHeader = req.header('Authorization')
-        let sessionID = authHeader.split(' ')[1];
-        if (sessionID) {
-            userData = verifyToken(sessionID)
-            if (userData) {
-                req.session.userData = userData
-                req.session.sessionID = sessionID
-            }
-            else {
-                return res.status(401).send({
-                    ok: false,
-                    error: {
-                        reason: "Invalid SessionToken",
-                        code: 401
-                    }
-                })
-            }
-        }
-        else {
-            return res.status(401).send({
-                ok: false,
-                error: {
-                    reason: "Missing SessionToken",
-                    code: 401
-                }
-            })
-        }
-    }
-    next()
-})
-
-app.get('/', (req, res) => res.send('Hello World!'))
-app.use('/api/user', user)
-app.use('/api/category', category)
-app.use('/api/article', article)
+app.use('/api/user', user);
+app.use('/api/category', category);
+app.use('/api/article', article);
 
 // Handle response, add token if needed
 app.use(async (req, res, next) => {
     if (!res.data) {
         return res.status(404).send({
-            status: false,
+            ok: false,
             error: {
                 reason: "Invalid Endpoint",
                 code: 404
             }
         })
     }
-    if (req.newSessionRequired && req.session.userData) {
-        let user = await User.findById(req.session.userData.id)
-        try {
-            let jwt = await user.generateJWT()
-            res.setHeader('session-token', jwt)
-            res.data['session-token'] = jwt
-        }
-        catch (e) {
-            console.log(`e: ${e}`)
-        }
+    if (res.data.err) {
+        return res.status(res.data.status || 400).send({
+            ok: false,
+            error: {
+                reason: res.data.err,
+                code: res.data.status || 400,
+            }
+        })
     }
-    if (req.session && req.session.sessionID) {
-        try {
-            res.setHeader('session-token', req.session.sessionID)
-            res.data['session-token'] = req.session.sessionID
-        }
-        catch (e) {
-            console.log(`e: ${e}`)
-        }
-    }
-    res.status(res.statusCode || 200)
-    .send({status: true, response: res.data})
+    return res.status(res.data.status || 200).send({
+        ok: true, 
+        response: res.data,
+    })
 })
 
-app.listen(port, () => console.log(`Example app listening on port port!`))
+app.listen(port, () => console.log(`Backend listening on port ${port}`))
 mongoose.connect(
     process.env.DB_CONNECTION,
     { useNewUrlParser: true, useUnifiedTopology: true },
-    (err) => console.log('connected to DB!!!')
+    (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Connected to MongoDB successfully');
+        }
+    }
 )

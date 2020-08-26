@@ -1,127 +1,87 @@
-const express = require('express')
-const router = express.Router()
-const User = require('../models/User')
-const { verifyPassword } = require('../services/authUtils')
+const express = require('express');
+const router = express.Router();
+const User = require('../models/User');
+const { verifyPassword } = require('../services/authUtils');
+const auth = require('../middleware/auth');
+
+router.get('/all', async (req, res, next) => {
+    try {
+        res.data = await User.find({}).exec();
+        return next();
+    } catch (e) {
+        res.data = { err: e.message || e.errmsg };
+        return next();
+    }
+});
 
 // authentication
-router.post('/authenticate', async (req, res, next) => {
-    console.log(req.body)
+router.post('/signin', async (req, res, next) => {
     if (!req.body.email || !req.body.password) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: "Missing parameters",
-                code: 400
-            }
-        })
+        res.data = { err: 'Missing parameters' };
+        return next();
     }
-    let user = await User.findOne({email: req.body.email})
+    const user = await User.findOne({email: req.body.email});
     if (!user) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: "User with this email does not exist",
-                code: 400
-            }
-        })
+        res.data = { err: 'User with this email does not exist' };
+        return next();
     }
-    let validPassword = await user.validPassword(req.body.password)
+    const validPassword = await user.validPassword(req.body.password);
     if (!validPassword) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: "Invalid password",
-                code: 400
-            }
-        })
+        res.data = { err: 'Invalid password' };
+        return next();
     }
-    req.session.userData = {
-        id: user._id,
-        email: user.email
-    }
-    res.data = {
-        ok: true
-    }
-    next()
+    res.data = user.generateJWT();
+    next();
 })
 
-router.post('/register', async (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
     if (!req.body.email || !req.body.password) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: "Missing parameters",
-                code: 400
-            }
-        })
+        res.data = { err: 'Missing parameters' };
+        return next();
     }
     if (!verifyPassword(req.body.password)) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: "Invalid passwrd. Must contain 6-20 numbers, 1 numeric and 1 uppercase digit",
-                code: 400
-            }
-        })
+        res.data = {
+            err: "Invalid password. Must contain 6-20 numbers, 1 numeric and 1 uppercase digit"
+        }
+        return next();
     }
-    let keyWords = req.body.keywords || []
-    let saveUser
     try {
-        let user = new User({
+        const user = new User({
             email: req.body.email,
             data: {
-                keyWords: keyWords,
+                keyWords: req.body.keywords || [],
                 watchedArticles: [],
             }
         })
-        await user.setPassword(req.body.password)
-        saveUser = await user.save()
+        await user.setPassword(req.body.password);
+        const newUser = await user.save();
+        res.data = newUser;
+        return next();
     }
     catch (e) {
-        if (e) {
-            return res.status(400).send({
-                ok: false,
-                error: {
-                    reason: e.message || e.errmsg,
-                    code: 400
-                }
-            })
-        }
+        res.data = { err: e.message || e.errmsg };
+        return next();
     }
-    res.data = {
-        user: saveUser
-    }
-    next()
 })
 
 router.put('/changekeywords', async (req, res, next) => {
     if (!req.body.keywords) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: 'Missing keywods',
-                code: 400
-            }
-        })
+        res.data = { err: 'Missing keywords' };
+        return next();
     }
     try {
-        let user = await User.findById(req.session.userData.id)
-        await user.set({data: {keyWords: req.body.keywords}})
-        await user.save()
+        const user = await User.findById(req.user.id);
+        const newUser = user.set({data: {keyWords: req.body.keywords}});
+        await newUser.save();
+        res.data = req.body.keywords;
+        next();
     }
     catch (e) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: e.message || e.errmsg,
-                code: 400
-            }
-        })
+        res.data = { err: e.message || e.errmsg };
+        return next();
     }
-    res.data = {
-        keywords: req.body.keywords
-    }
-    next()
-})
+});
 
-module.exports = router
+
+
+module.exports = router;
