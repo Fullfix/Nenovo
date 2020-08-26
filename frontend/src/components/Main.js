@@ -6,12 +6,12 @@ import {
     Link,
     Redirect
   } from "react-router-dom";
-import './main.css'
-import Header from './header'
-import Newest from './newest'
-import Category from './category'
-import Recom from './recom'
-import Err404 from './404'
+import './main.css';
+import Header from './Header/Header';
+import Newest from './newest';
+import Recom from './recom';
+import Err404 from './Err404/Err404';
+import CategoryPage from './CategoryPage/CategoryPage';
 
 class Main extends React.Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class Main extends React.Component {
             <div className="content">
               <Switch>
                 <Route exact path={`/`} component={Newest}></Route>
-                <Route exact path={`/category`} component={Category}></Route>
+                <Route exact path={`/category`} component={CategoryPage}></Route>
                 <Route exact path={`/recommend`} component={Recom}></Route>
                 <Route render={
                   () => 

@@ -1,5 +1,5 @@
 import React from 'react';
-import './404.css';
+import './Err404.css';
 
 const Err404 = () => {
     return(
@@ -10,4 +10,4 @@ const Err404 = () => {
     )
 }
 
-export default Err404
+export default Err404;

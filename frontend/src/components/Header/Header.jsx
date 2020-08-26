@@ -30,7 +30,7 @@ const Header = () => {
             left: box.left + window.pageXOffset
         };
     }
-    let exitBut =""
+    let exitBut = "";
     if(Cookies.get('token') !== "") {
         exitBut = 
             <div className="logo-place lo exit">
@@ -45,7 +45,6 @@ const Header = () => {
     }
 
     return (
-
         <header className="main-header">
             <div className="logo-place">
                 <Link className="logo" to='/'><h1>НеНово</h1></Link>
@@ -80,4 +79,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default Header;
