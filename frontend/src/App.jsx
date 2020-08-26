@@ -7,9 +7,11 @@ import {
 } from "react-router-dom";
 import LoginPage from './components/LoginPage/LoginPage';
 import Main from './components/Main'
+import { initAxios } from './helpers/auth';
 
 const App = () => {
-    return(
+    initAxios();
+    return (
         <Router>
             <Switch>
                 <Route strict path="/auth" component={LoginPage} />

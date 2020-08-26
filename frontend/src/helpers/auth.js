@@ -10,6 +10,7 @@ export const login = async (email, password) => {
     if (res.ok) {
         const token = res.response;
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+        localStorage.setItem('token', token);
         return { success: true };
     }
     return { success: false, error: res.error.reason };
@@ -26,4 +27,18 @@ export const register = async (email, password) => {
         return { success: true };
     }
     return { success: false, error: res.error.reason };
+}
+
+export const logout = () => {
+    delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('token');
+}
+
+export const isAuthenticated = () => {
+    return !!axios.defaults.headers.common['Authorization'];
+}
+
+export const initAxios = () => {
+    const token = localStorage.getItem('token');
+    if (token) axios.defaults.headers.common['Authorization'] = token;
 }

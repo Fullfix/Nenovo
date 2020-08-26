@@ -9,10 +9,14 @@ import {
 import Login from './Login';
 import Register from './Register';
 import './LogReg.css';
+import { isAuthenticated } from '../../helpers/auth';
 
 const LoginPage = () => {
     let { path, url } = useRouteMatch();
-    console.log(url)
+    console.log('AUTHED', isAuthenticated())
+    if (isAuthenticated()) return (
+        <Redirect to="/" />
+    )
     return(
         <div className="loginPage">
             <div className="leftSide">

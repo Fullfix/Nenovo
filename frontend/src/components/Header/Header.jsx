@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Anime, { anime } from 'react-anime'
 import Cookies from 'js-cookie'
+import { logout } from '../../helpers/auth';
 
 const Header = () => {
     const [width, setWidth] = React.useState(window.innerWidth);
@@ -30,19 +31,6 @@ const Header = () => {
             left: box.left + window.pageXOffset
         };
     }
-    let exitBut = "";
-    if(Cookies.get('token') !== "") {
-        exitBut = 
-            <div className="logo-place lo exit">
-                <p onClick={() => {
-                    Cookies.set('token', "")
-                    document.location.reload(true);
-                }}>Выход</p>
-            </div>
-    }
-    else {
-        exitBut = ""
-    }
 
     return (
         <header className="main-header">
@@ -58,7 +46,12 @@ const Header = () => {
             <div className="logo-place lo">
                 <Link to='/' className="recom"><p id="res">Недавние</p></Link>
             </div>
-            {exitBut}
+            <div className="logo-place lo exit">
+                <p onClick={() => {
+                    logout();
+                    window.location.href = '/auth/login';
+                }}>Выход</p>
+            </div>
             <Anime className='stick '
                 translateX={() => {
                     let mode = window.location.href.split('/')[3];
