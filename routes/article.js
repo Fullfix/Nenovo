@@ -4,66 +4,50 @@ const ObjectId = require('mongoose').Types.ObjectId
 const Category = require('../models/Category')
 const User = require('../models/User')
 const Article = require('../models/Article')
+const auth = require('../middleware/auth')
 
-router.post('/watch', async (req, res, next) => {
+router.post('/watch', auth, async (req, res, next) => {
     if (!req.body.id) {
-        return res.status(400).send({
-            ok: false,
-            message: {
-                reason: 'missing article id',
-                code: 400
-            }
-        })
+        res.data = { err: 'Missing article id' };
+        return next();
     }
     if (!req.body.id instanceof String) {
-        return res.status(400).send({
-            ok: false,
-            message: {
-                reason: 'article id is not string',
-                code: 400
-            }
-        })
+        res.data = { err: 'Article id is not string' };
+        return next();
     }
-    let id = new ObjectId(req.body.id)
-    let articleObj = await Article.findById(id).exec()
+    const id = new ObjectId(req.body.id);
+    const articleObj = await Article.findById(id).exec();
     if (!articleObj) {
-        return res.status(400).send({
-            ok: false,
-            message: {
-                reason: 'article with this id does not exist',
-                code: 400
-            }
-        })
+        res.data = { err: 'Article with this id does not exist' };
+        return next();
     }
-    let user = await User.findById(req.session.userData.id)
+    const user = await User.findById(req.user.id);
     if (!user.data.watchedArticles.includes(id)) {
         user.data.watchedArticles.push(id)
-        await user.save()
+        await user.save();
     }
     res.data = {
-        watched: true
+        watched: true,
     }
-    next()
+    return next();
 })
 
 router.get('/recent', async (req, res, next) => {
-    let date = new Date()
-    date.setDate(date.getDate() - 1)
-    let articles = await Article.find({
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    const articles = await Article.find({
         date: { $gte: date }
-    }).sort('-date').exec()
-    res.data = {
-        articles: articles
-    }
-    next()
+    }).sort('-date').exec();
+    res.data = articles;
+    return next();
 })
 
-router.get('/recommended', async (req, res, next) => {
-    let user = await User.findById(req.session.userData.id).exec()
-    let date = new Date()
-    date.setDate(date.getDay() - 3)
-    console.log(user)
-    let keywordSearch = user.data.keyWords.map(keyword => {
+router.get('/recommended', auth, async (req, res, next) => {
+    const user = await User.findById(req.user.id).exec();
+    const date = new Date();
+    date.setDate(date.getDay() - 3);
+    console.log(user);
+    const keywordSearch = user.data.keyWords.map(keyword => {
         return {
             $or: [
                 {
@@ -75,24 +59,24 @@ router.get('/recommended', async (req, res, next) => {
             ]
         }
     })
-    console.log(keywordSearch)
+    console.log(keywordSearch);
     let articles;
     if (keywordSearch.length !== 0) {
         articles = await Article.find({
             $or: keywordSearch,
             date: { $gte: date }
-        }).sort('-date').exec()
+        }).sort('-date').exec();
     }
     else {
         articles = await Article.find({
             date: { $gte: date }
-        }).sort('-date').exec()
+        }).sort('-date').exec();
     }
     res.data = {
         keywords: user.data.keyWords,
         articles: articles
     }
-    next()
+    return next();
 })
 
-module.exports = router
+module.exports = router;

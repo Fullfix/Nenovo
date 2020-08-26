@@ -6,47 +6,33 @@ const Article = require('../models/Article')
 const { translateCategories } = require('../data')
 
 router.get('/names', async (req, res, next) => {
-    let names = await Category.find({}, {name: 1}).exec()
-    names = names.map(cat => [cat.name, translateCategories[cat.name]])
-    console.log(names)
-    res.data = {
-        names: names
-    }
-    next()
+    const names = await Category.find({}, {name: 1}).exec();
+    names = names.map(cat => [cat.name, translateCategories[cat.name]]);
+    console.log(names);
+    res.data = names;
+    return next();
 })
 
 router.get('/articles', async (req, res, next) => {
-    let categoryName = req.body.name
+    const categoryName = req.body.name;
     if (!categoryName) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: 'Missing parameter: name',
-                code: 400
-            }
-        })
+        res.data = { err: 'Missing parameter: name' };
+        return next();
     }
-    let category = await Category.findOne({name: categoryName}).exec()
+    const category = await Category.findOne({name: categoryName}).exec();
     if (!category) {
-        return res.status(400).send({
-            ok: false,
-            error: {
-                reason: 'Category with this name does not exist',
-                code: 400
-            }
-        })
+        res.data = { err: 'Category with this name does not exist' };
+        return next();
     }
-    let date = new Date()
-    date.setDate(date.getDay() - 3)
-    let articles = await Article.find({
+    const date = new Date();
+    date.setDate(date.getDay() - 3);
+    const articles = await Article.find({
         '_id': { $in: category.articles},
         'date': { $gte: date }
-    }).sort('-date').exec()
-    let articlesObj = articles.map(article => article.toObject())
-    res.data = {
-        articles: articlesObj
-    }
-    next()
+    }).sort('-date').exec();
+    const articlesObj = articles.map(article => article.toObject());
+    res.data = articlesObj;
+    next();
 })
 
-module.exports = router
+module.exports = router;
