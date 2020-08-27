@@ -15,7 +15,14 @@ const categoryReducer = (state, action) => {
             isLoadingArticles: true,
             categories: action.names, 
         };
-        case 'selectCategory': return { ...state, selectedCategory: action.category };
+        case 'selectCategory': {
+            if (action.category === state.selectedCategory) return state;
+            return { 
+                ...state, 
+                selectedCategory: action.category,
+                isLoadingArticles: true,
+            }
+        }
         case 'getArticles': return { 
             ...state,
             articles: action.articles, 

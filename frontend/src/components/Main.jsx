@@ -8,7 +8,7 @@ import {
     } from "react-router-dom";
 import './main.css';
 import Header from './Header/Header';
-import Newest from './newest';
+import RecentPage from './RecentPage/RecentPage';
 import Recom from './recom';
 import Err404 from './Err404/Err404';
 import CategoryPage from './CategoryPage/CategoryPage';
@@ -25,7 +25,7 @@ const Main = (props) => {
             <Header></Header>
             <div className="content">
                 <Switch>
-                    <Route exact path={`/`} component={Newest}></Route>
+                    <Route exact path={`/`} component={RecentPage}></Route>
                     <Route exact path={`/category`} component={CategoryPage}></Route>
                     <Route exact path={`/recommend`} component={Recom}></Route>
                     <Route render={

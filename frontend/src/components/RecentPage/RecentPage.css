@@ -1,19 +1,23 @@
-.category-articles {
+.recent-page {
     position: relative;
-    width: calc(100% - 170px);
+}
+
+.recent-articles {
+    position: relative;
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     height: calc(100vh - 60px);
 }
 
-.category-articles .article {
+.recent-articles .article {
     margin-top: 30px;
 }
 
-.cat-articles-load {
+.loading-recent {
     position: absolute;
     left: 50%;
-    top: 30px;
     transform: translateX(-50%);
+    top: 50px;
 }

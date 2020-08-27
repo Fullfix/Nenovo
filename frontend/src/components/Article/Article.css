@@ -1,0 +1,33 @@
+.article {
+    width: 300px;
+    height: 450px;
+    color: black;
+    display: block;
+    text-decoration: none;
+    background-color: rgb(226, 226, 226);
+}
+
+.article img {
+    width: 300px;
+    height: 200px;
+}
+
+.article-title {
+    height: 70px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.article-date {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.article-text {
+    margin-top: 5px;
+    font-size: 14px;
+}

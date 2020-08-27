@@ -1,6 +1,7 @@
 import React from 'react';
 import './CategoryArticles.css';
 import ReactLoading from 'react-loading';
+import Article from '../Article/Article';
 
 const CategoryArticles = (props) => {
     if (!props.active) return <div className="category-articles"></div>
@@ -10,10 +11,9 @@ const CategoryArticles = (props) => {
             color="#61C9A8"/>
         </div>
     )
-    console.log(props.articles);
     return (
-        <div className="category-articles">
-            ARTICLES HERE BLYAT
+        <div className="category-articles scrollbar">
+            {props.articles.map(article => <Article key={article._id} {...article} />)}
         </div>
     )
 }
