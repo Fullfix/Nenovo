@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useReducer } from 'react';
 import ReactLoading from 'react-loading';
 import Article from '../Article/Article';
+import { getRecent } from '../../helpers/article';
 import './RecentPage.css';
 
 const recentReducer = (state, action) => {
@@ -24,9 +25,11 @@ const RecentPage = (props) => {
 
     useEffect(() => {
         const getArticles = async () => {
-            
+            const articles = await getRecent();
+            dispatch({ type: 'finishLoading', articles });
         }
-    })
+        if (state.isLoading) getArticles();
+    }, [state.isLoading]);
 
     if (state.isLoading) return <ReactLoading 
     className="loading-recent"
