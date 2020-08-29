@@ -1,13 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
 import ReactLoading from 'react-loading';
-import './CategoryPage.css';
+import './ArticlePage.css';
 import { useEffect } from 'react';
 import * as utils from '../../helpers/category';
 import { useReducer } from 'react';
-import CategoryArticles from './CategoryArticles';
+import CategoryArticles from './ArticleList';
 
-const categoryReducer = (state, action) => {
+const articleReducer = (state, action) => {
     switch (action.type) {
         case 'getCategories': return { 
             ...state, 
@@ -40,7 +39,7 @@ const CategoryPage = () => {
         articles: null,
         selectedCategory: null,
     }
-    const [state, dispatch] = useReducer(categoryReducer, initialState);
+    const [state, dispatch] = useReducer(articleReducer, initialState);
     
     useEffect(() => {
         const getCategories = async () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './CategoryArticles.css';
+import './ArticleList.css';
 import ReactLoading from 'react-loading';
 import Article from '../Article/Article';
 

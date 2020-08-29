@@ -11,7 +11,7 @@ import Header from './Header/Header';
 import RecentPage from './RecentPage/RecentPage';
 import Recom from './recom';
 import Err404 from './Err404/Err404';
-import CategoryPage from './CategoryPage/CategoryPage';
+import CategoryPage from './ArticlePage/ArticlePage';
 import axios from 'axios';
 import { isAuthenticated } from '../helpers/auth';
 
