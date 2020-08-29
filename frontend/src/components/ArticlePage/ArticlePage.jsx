@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import * as utils from '../../helpers/category';
 import { useReducer } from 'react';
 import CategoryArticles from './ArticleList';
+import CategoryList from './CategoryList';
 
 const articleReducer = (state, action) => {
     switch (action.type) {
@@ -78,9 +79,11 @@ const CategoryPage = () => {
 
     return (
         <div className="category-page">
-            <div className="categories">
-                {categoryDivs}
-            </div>
+            <CategoryList 
+            active={true} 
+            categories={state.categories}
+            selected={state.selectedCategory}
+            onSelect={(category) => dispatch({ type: 'selectCategory', category })}/>
             <CategoryArticles
             active={state.categories && state.selectedCategory}
             loading={state.isLoadingArticles} 
