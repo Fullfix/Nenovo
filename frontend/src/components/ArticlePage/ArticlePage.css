@@ -21,3 +21,7 @@
 .category-selected {
     background-color: #61C9A8;
 }
+
+.article-content {
+    display: flex;
+}

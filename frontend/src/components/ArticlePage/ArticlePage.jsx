@@ -6,6 +6,13 @@ import * as utils from '../../helpers/category';
 import { useReducer } from 'react';
 import CategoryArticles from './ArticleList';
 import CategoryList from './CategoryList';
+import TypeSelect from './TypeSelect';
+
+const articleTypes = [
+    ["recent", "Недавние"],
+    ["recommended", "Рекомендованные"],
+    ["category", "По категориям"],
+]
 
 const articleReducer = (state, action) => {
     switch (action.type) {
@@ -79,15 +86,21 @@ const CategoryPage = () => {
 
     return (
         <div className="category-page">
-            <CategoryList 
+            <CategoryList
             active={true} 
             categories={state.categories}
             selected={state.selectedCategory}
             onSelect={(category) => dispatch({ type: 'selectCategory', category })}/>
-            <CategoryArticles
-            active={state.categories && state.selectedCategory}
-            loading={state.isLoadingArticles} 
-            articles={state.articles} />
+            <div className="article-content">
+                <TypeSelect
+                articleTypes={articleTypes}
+                selected={'category'}
+                onSelect={(articleType) => dispatch({ type: 'selectType', articleType })}/>
+                <CategoryArticles
+                active={state.categories && state.selectedCategory}
+                loading={state.isLoadingArticles} 
+                articles={state.articles} />
+            </div>
         </div>
     )
 }

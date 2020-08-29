@@ -1,0 +1,27 @@
+.type-select {
+    background: linear-gradient(270deg, #FDFCF8 0%, rgba(255, 255, 255, 0) 99.98%, rgba(255, 255, 255, 0.0129032) 99.99%), #61C9A8;
+    width: 290px;
+    padding: 9px 0;
+    position: relative;
+}
+
+.article-type {
+    width: 100%;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: start;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 9px 0 9px 25px;
+    transition: background .5s;
+}
+
+.article-type:hover {
+    background: rgba(255, 51, 51, .25);
+    cursor: pointer;
+}
+
+.type-selected {
+    background: rgba(22, 169, 255, 0.5) !important;
+}
