@@ -40,5 +40,5 @@ export const isAuthenticated = () => {
 
 export const initAxios = () => {
     const token = localStorage.getItem('token');
-    if (token) axios.defaults.headers.common['Authorization'] = token;
+    if (token) axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 }

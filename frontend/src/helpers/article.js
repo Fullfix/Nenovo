@@ -14,7 +14,7 @@ export const getRecommended = async () => {
         res = err.response.data;
     }
     if (res.ok) {
-        return { success: true, articles: res.response };
+        return { success: true, articles: res.response.articles };
     }
     return { success: false, error: res.error.reason };
 }
