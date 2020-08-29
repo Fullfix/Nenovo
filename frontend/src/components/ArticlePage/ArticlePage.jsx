@@ -2,9 +2,10 @@ import React from 'react';
 import ReactLoading from 'react-loading';
 import './ArticlePage.css';
 import { useEffect } from 'react';
-import * as utils from '../../helpers/category';
+import * as catUtils from '../../helpers/category';
+import * as utils from '../../helpers/article';
 import { useReducer } from 'react';
-import CategoryArticles from './ArticleList';
+import ArticleList from './ArticleList';
 import CategoryList from './CategoryList';
 import TypeSelect from './TypeSelect';
 
@@ -14,14 +15,32 @@ const articleTypes = [
     ["category", "По категориям"],
 ]
 
+const categories = [
+    ['politics', 'Политика'],
+    ['economy', 'Экономика'],
+    ['coronavirus', 'Коронавирус'],
+    ['internet', 'Интернет'],
+    ['society', 'Социум'],
+    ['entertainment', 'Развлечения'],
+]
+
 const articleReducer = (state, action) => {
     switch (action.type) {
-        case 'getCategories': return { 
-            ...state, 
-            isLoading: false,
+        // MAIN
+        case 'selectType': return {
+            ...state,
+            articleType: action.articleType,
             isLoadingArticles: true,
-            categories: action.names, 
-        };
+        }
+        case 'getArticles': {
+            if (!action.ok) return { ...state, isLoadingArticles: false };
+            return {
+                ...state,
+                articles: action.articles, 
+                isLoadingArticles: false,
+            }
+        }
+        // CATEGORY
         case 'selectCategory': {
             if (action.category === state.selectedCategory) return state;
             return { 
@@ -30,74 +49,65 @@ const articleReducer = (state, action) => {
                 isLoadingArticles: true,
             }
         }
-        case 'getArticles': return { 
-            ...state,
-            articles: action.articles, 
-            isLoadingArticles: false,
-        }
         default: return state;
     }
 }
 
 const CategoryPage = () => {
     const initialState = {
-        isLoading: true,
-        isLoadingArticles: false,
-        categories: null,
+        // MAIN
+        articleType: 'category',
+        isLoadingArticles: true,
         articles: null,
-        selectedCategory: null,
+        // CATEGORY
+        selectedCategory: 'politics',
     }
     const [state, dispatch] = useReducer(articleReducer, initialState);
     
     useEffect(() => {
-        const getCategories = async () => {
-            const names = await utils.getNames();
-            dispatch({ type: 'getCategories', names });
-        }
-        if (state.isLoading) getCategories();
-    }, [state.isLoading]);
-    useEffect(() => {
         const getArticles = async () => {
-            const { success, articles } = await utils.getArticles(state.selectedCategory);
-            dispatch({ 
-                type: 'getArticles',
-                ok: success,
-                articles,
-            });
+            if (state.articleType === 'category') {
+                const { success, articles } = 
+                await catUtils.getArticles(state.selectedCategory);
+                return dispatch({ 
+                    type: 'getArticles',
+                    ok: success,
+                    articles,
+                });
+            }
+            if (state.articleType === 'recent') {
+                const articles = await utils.getRecent();
+                return dispatch({ 
+                    type: 'getArticles',
+                    ok: true,
+                    articles,
+                });
+            }
+            if (state.articleType === 'recommended') {
+                const { success, articles } = await utils.getRecommended();
+                return dispatch({ 
+                    type: 'getArticles',
+                    ok: success,
+                    articles,
+                });
+            }
         }
-        if (state.isLoadingArticles && state.selectedCategory) getArticles();
-    }, [state.isLoadingArticles, state.selectedCategory]);
-
-    if (state.isLoading) return <ReactLoading 
-    className="loading-category"
-    type="spin" color="#61C9A8" 
-    height="100px" width="100px" />
-
-    console.log(state.categories);
-
-    const categoryDivs = state.categories.map(category => {
-        return <button key={category[0]}
-        className={`category-btn ${category[0] === state.selectedCategory ? 
-        'category-selected' : ''}`}
-        onClick={() => dispatch({ type: 'selectCategory', category: category[0] })}>
-            {category[1]}
-        </button>
-    })
+        if (state.isLoadingArticles) getArticles();
+    }, [state.isLoadingArticles, state.selectedCategory, state.articleType]);
 
     return (
-        <div className="category-page">
+        <div className="article-page">
             <CategoryList
-            active={true} 
-            categories={state.categories}
+            active={state.articleType === 'category'} 
+            categories={categories}
             selected={state.selectedCategory}
             onSelect={(category) => dispatch({ type: 'selectCategory', category })}/>
             <div className="article-content">
                 <TypeSelect
                 articleTypes={articleTypes}
-                selected={'category'}
+                selected={state.articleType}
                 onSelect={(articleType) => dispatch({ type: 'selectType', articleType })}/>
-                <CategoryArticles
-                active={state.categories && state.selectedCategory}
+                <ArticleList
                 loading={state.isLoadingArticles} 
                 articles={state.articles} />
             </div>

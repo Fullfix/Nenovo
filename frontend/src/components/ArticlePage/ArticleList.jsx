@@ -3,8 +3,7 @@ import './ArticleList.css';
 import ReactLoading from 'react-loading';
 import Article from '../Article/Article';
 
-const CategoryArticles = (props) => {
-    if (!props.active) return <div className="category-articles"></div>
+const ArticleList = (props) => {
     if (props.loading) return (
         <div className="category-articles">
             <ReactLoading type="spin" className="cat-articles-load"
@@ -18,4 +17,4 @@ const CategoryArticles = (props) => {
     )
 }
 
-export default CategoryArticles;
+export default ArticleList;

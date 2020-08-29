@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const CategoryList = (props) => {
     return (
-        <div className={`category-list ${props.active ? 'active' : ''}`}>
+        <div className={`category-list ${props.active ? 'category-active' : ''}`}>
             {props.categories.map(cat => 
             <button className={`category ${props.selected === cat[0] ? 'selected' : ''}`}
             key={cat[0]}
@@ -20,7 +20,7 @@ const CategoryList = (props) => {
 CategoryList.propTypes = {
     active: PropTypes.bool,
     categories: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string).isRequired),
-    selected: PropTypes.string,
+    selected: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
 }
 

@@ -6,6 +6,7 @@ export const getRecent = async () => {
 }
 
 export const getRecommended = async () => {
+    console.log(axios.defaults.headers.common)
     let res;
     try {
         res = (await axios.get('/api/article/recommended')).data;
