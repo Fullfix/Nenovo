@@ -35,7 +35,7 @@ const updateDB = async (categoryArticles) => {
     for (let cat of Object.keys(categoryArticles)) {
         await addArticlesToCategory(cat, categoryArticles[cat])
     }
-    console.log('updated')
+    console.log('Updated successfully')
     console.log(Category.find({}))
 }
 

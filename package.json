@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
+    "fetch": "node scripts/fetchArticles.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
