@@ -38,13 +38,7 @@ const Header = () => {
                 <Link className="logo" to='/'><h1>НеНово</h1></Link>
             </div>
             <div className="logo-place lo">
-                <Link to='./recommend' className="recom"><p id="rec">Рекомендации</p></Link>
-            </div>
-            <div className="logo-place lo">
-                <Link to='./category' className="recom"><p id="cat">Категории</p></Link>
-            </div>
-            <div className="logo-place lo">
-                <Link to='/' className="recom"><p id="res">Недавние</p></Link>
+                <Link to='./articles' className="recom"><p id="cat">Новости</p></Link>
             </div>
             <div className="logo-place lo exit">
                 <p onClick={() => {
@@ -55,15 +49,11 @@ const Header = () => {
             <Anime className='stick '
                 translateX={() => {
                     let mode = window.location.href.split('/')[3];
-                    if (mode === "") return getCoords(document.getElementById('res')).left - 20
-                    else if (mode === "category") return getCoords(document.getElementById('cat')).left - 20
-                    else if (mode === "recommend") return getCoords(document.getElementById('rec')).left - 20
+                    if (mode === "articles") return getCoords(document.getElementById('cat')).left - 20
                 }}
                 width={() => {
                     let mode = window.location.href.split('/')[3];
-                    if (mode === "") return document.getElementById('res').clientWidth
-                    else if (mode === "category") return document.getElementById('cat').clientWidth
-                    else if (mode === "recommend") return document.getElementById('rec').clientWidth
+                    if (mode === "articles") return document.getElementById('cat').clientWidth
                 }}
             >
                 <div></div>

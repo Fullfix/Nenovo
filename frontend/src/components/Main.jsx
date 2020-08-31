@@ -11,7 +11,7 @@ import Header from './Header/Header';
 import RecentPage from './RecentPage/RecentPage';
 import Recom from './recom';
 import Err404 from './Err404/Err404';
-import CategoryPage from './ArticlePage/ArticlePage';
+import ArticleList from './ArticlePage/ArticlePage';
 import axios from 'axios';
 import { isAuthenticated } from '../helpers/auth';
 
@@ -26,7 +26,7 @@ const Main = (props) => {
             <div className="content">
                 <Switch>
                     <Route exact path={`/`} component={RecentPage}></Route>
-                    <Route exact path={`/category`} component={CategoryPage}></Route>
+                    <Route exact path={`/articles`} component={ArticleList}></Route>
                     <Route exact path={`/recommend`} component={Recom}></Route>
                     <Route render={
                         () => 
