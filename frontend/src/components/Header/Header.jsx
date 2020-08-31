@@ -6,31 +6,38 @@ import {
     Link,
     useParams,
     useRouteMatch,
-    Redirect
+    Redirect,
+    useLocation
 } from "react-router-dom";
-import Anime, { anime } from 'react-anime'
+import Anime from 'react-anime'
 import Cookies from 'js-cookie'
 import { logout } from '../../helpers/auth';
+import { useRef } from 'react';
+
+const coordsMap = {
+    '/': {
+        translateX: 0,
+        width: 92,
+    },
+    '/articles': {
+        translateX: 140,
+        width: 80,
+    }
+}
 
 const Header = () => {
-    const [width, setWidth] = React.useState(window.innerWidth);
-    const [height, setHeight] = React.useState(window.innerHeight);
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
     const updateWidthAndHeight = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-      };
-      React.useEffect(() => {
+    };
+    const { pathname } = useLocation();
+    console.log(pathname)
+    useEffect(() => {
         window.addEventListener("resize", updateWidthAndHeight);
         return () => window.removeEventListener("resize", updateWidthAndHeight);
     });
-
-    function getCoords(elem) {
-        let box = elem.getBoundingClientRect();
-        return {
-            top: box.top + window.pageYOffset,
-            left: box.left + window.pageXOffset
-        };
-    }
 
     return (
         <header className="main-header">
@@ -38,7 +45,7 @@ const Header = () => {
                 <Link className="logo" to='/'><h1>НеНово</h1></Link>
             </div>
             <div className="logo-place lo">
-                <Link to='./articles' className="recom"><p id="cat">Новости</p></Link>
+                <Link to='/articles' className="recom"><p id="articles">Новости</p></Link>
             </div>
             <div className="logo-place lo exit">
                 <p onClick={() => {
@@ -47,16 +54,8 @@ const Header = () => {
                 }}>Выход</p>
             </div>
             <Anime className='stick '
-                translateX={() => {
-                    let mode = window.location.href.split('/')[3];
-                    if (mode === "articles") return getCoords(document.getElementById('cat')).left - 20
-                }}
-                width={() => {
-                    let mode = window.location.href.split('/')[3];
-                    if (mode === "articles") return document.getElementById('cat').clientWidth
-                }}
+            {...coordsMap[pathname]}
             >
-                <div></div>
             </Anime>
         </header>
     )

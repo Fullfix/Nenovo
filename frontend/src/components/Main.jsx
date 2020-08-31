@@ -25,12 +25,10 @@ const Main = (props) => {
             <Header></Header>
             <div className="content">
                 <Switch>
-                    <Route exact path={`/`} component={RecentPage}></Route>
                     <Route exact path={`/articles`} component={ArticleList}></Route>
-                    <Route exact path={`/recommend`} component={Recom}></Route>
                     <Route render={
                         () => 
-                            <Redirect to="/"></Redirect>
+                            <Redirect to="/articles"></Redirect>
                     }></Route>
                 </Switch>
             </div>
