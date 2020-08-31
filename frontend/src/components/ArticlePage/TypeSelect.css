@@ -1,6 +1,6 @@
 .type-select {
     background: linear-gradient(270deg, #FDFCF8 0%, rgba(255, 255, 255, 0) 99.98%, rgba(255, 255, 255, 0.0129032) 99.99%), #61C9A8;
-    width: 290px;
+    width: 15em;
     padding: 9px 0;
     position: relative;
 }
@@ -8,12 +8,12 @@
 .article-type {
     width: 100%;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 1.3em;
     text-align: start;
     background: transparent;
     border: none;
     outline: none;
-    padding: 9px 0 9px 25px;
+    padding: .5em 0 .5em .8em;
     transition: background .5s;
 }
 

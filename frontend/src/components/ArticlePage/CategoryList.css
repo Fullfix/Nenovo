@@ -1,21 +1,21 @@
 .category-list {
-    height: 100px;
+    height: 5.6em;
     width: 100%;
     display: flex;
     align-items: center;
     background-color: #E0E0E0;
-    margin-top: -100px;
+    margin-top: -5.6em;
     transition: margin-top 1s;
 }
 
 .category {
-    margin-left: 25px;
-    width: 250px;
-    height: 50px;
+    margin-left: 1.4em;
+    width: 14em;
+    height: 2.7em;
     background: linear-gradient(180deg, #FFFFFF 0%, rgba(128, 194, 255, 0) 100%), #1E6AFF;
     box-shadow: 0px 4px 4px rgba(255, 0, 0, 0.25);
-    border-radius: 33px;
-    font-size: 18px;
+    border-radius: 25px;
+    font-size: 1em;
     font-weight: bold;
     font-family: Roboto;
     border: none;
@@ -36,9 +36,9 @@
 }
 
 .category:last-child {
-    margin-right: 25px;
+    margin-right: 1.4em;
 }
 
 .category-active {
-    margin-top: 0px !important;
+    margin-top: 0 !important;
 }
