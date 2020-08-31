@@ -28,6 +28,7 @@
 
 .article-content {
     display: flex;
+    position: relative;
 }
 
 @media only screen and (max-width: 1000px) {

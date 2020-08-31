@@ -6,6 +6,7 @@ const Article = (props) => {
     const date = new Date(props.date);
     return (
         <a className="article" href={props.originSrc}
+        ref={props.articleRef}
         style={{
         }}>
             <div className="article-image"
@@ -37,6 +38,7 @@ Article.propTypes = {
     imageSrc: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     originSrc: PropTypes.string.isRequired,
+    articleRef: PropTypes.any,
 }
 
 export default Article;
