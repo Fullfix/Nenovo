@@ -42,6 +42,7 @@ const corsOptions = {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+app.use('/public', express.static(__dirname + '/frontend/public'));
 // app.use(cors());
 
 app.use('/api/user', user);

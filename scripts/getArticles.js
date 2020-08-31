@@ -13,7 +13,6 @@ Date.prototype.yyyymmdd = function() {
 }
 
 const getArticles = async () => {
-    console.log('Started fetching');
     let date = new Date()
     let today = date.yyyymmdd()
     date.setDate(date.getDate() - 1)

@@ -3,14 +3,26 @@ import './Article.css';
 import PropTypes from 'prop-types';
 
 const Article = (props) => {
+    const date = new Date(props.date);
     return (
-        <a className="article" href={props.originSrc}>
-            <img src={props.imageSrc} alt="articleImage"/>
+        <a className="article" href={props.originSrc}
+        style={{
+        }}>
+            <div className="article-image"
+            style={{
+                backgroundImage: `url(${props.imageSrc}), url('/public/notloaded.png')`
+            }}>
+                <div className="article-blur"
+                style={{
+                    backgroundImage: `url(${props.imageSrc})`
+                }}></div>
+            </div>
             <div className="article-title">
                 {props.title}
             </div>
+            <hr/>
             <div className="article-date">
-                {props.date}
+                {date.toLocaleDateString()} {date.toLocaleTimeString()}
             </div>
             <div className="article-text">
                 {props.text}
