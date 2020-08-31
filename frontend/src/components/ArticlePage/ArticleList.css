@@ -1,6 +1,6 @@
 .category-articles {
     position: relative;
-    width: calc(100% - 15em);
+    width: calc(100vw - 15em);
     display: flex;
     flex-direction: column;
     align-items: center;
