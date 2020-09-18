@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": { "node": ">=0.12" },
   "scripts": {
     "start": "nodemon server.js",
     "fetch": "node scripts/fetchArticles.js",
