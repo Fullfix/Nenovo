@@ -52,7 +52,7 @@ app.use('/api/category', category);
 app.use('/api/article', article);
 
 // Handle response, add token if needed
-app.use(async (req, res, next) => {
+app.use('/api/*', async (req, res, next) => {
     if (!res.data) {
         return res.status(404).send({
             ok: false,
