@@ -4,6 +4,7 @@ const User = require('./models/User')
 const bodyParser = require('body-parser')
 const logger = require('morgan');
 const cors = require("cors");
+const path = require('path');
 const {isNewSessionRequired, isAuthRequired, verifyToken} = require('./services/authUtils')
 const user = require('./routes/user')
 const category = require('./routes/category')
@@ -43,6 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use('/public', express.static(__dirname + '/frontend/public'));
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 // app.use(cors());
 
 app.use('/api/user', user);
@@ -74,6 +76,10 @@ app.use(async (req, res, next) => {
         response: res.data,
     })
 })
+
+app.get('*', (req, res) => { 
+    res.sendfile(path.join(__dirname, 'frontend/build/index.html'));  
+});
 
 app.listen(port, () => console.log(`Backend listening on port ${port}`))
 mongoose.connect(
