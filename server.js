@@ -25,7 +25,7 @@ require('./models/Article')
 require('./models/Category')
 
 const app = express()
-const port = 3001
+const port = process.env.PORT || 3001;
 
 const whiteList = ['http://localhost:3000', 'http://localhost:3001']
 const corsOptions = {
