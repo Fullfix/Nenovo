@@ -3,8 +3,8 @@ const Article = require('../models/Article')
 
 
 const addArticlesToCategory = async (category, articles) => {
+    let counter = 0;
     let categoryObj = await Category.findOne({name: category})
-    console.log(categoryObj)
     if (!categoryObj) {
         categoryObj = new Category({
             name: category,
@@ -24,19 +24,30 @@ const addArticlesToCategory = async (category, articles) => {
                 text: article.description,
                 originSrc: article.url
             })
-            await articleObj.save()
-            categoryObj.articles.push(articleObj._id)
+            await articleObj.save();
+            categoryObj.articles.push(articleObj._id);
+            counter++;
         }
     }
     await categoryObj.save()
+    return counter;
 }
 
 const updateDB = async (categoryArticles) => {
+    console.log('Started Updating');
+    const numObject = {};
     for (let cat of Object.keys(categoryArticles)) {
-        await addArticlesToCategory(cat, categoryArticles[cat])
+        const counter = await addArticlesToCategory(cat, categoryArticles[cat]);
+        numObject[cat] = counter;
     }
-    console.log('Updated successfully')
-    console.log(Category.find({}))
+    console.log('Finished Updating');
+    console.log('UPDATED:');
+    const total = [].concat(...Object.values(numObject)).reduce((a, b) => a + b, 0);
+    Object.entries(numObject).map(([key, value]) => {
+        console.log(`${key}: ${value}`);
+    });
+    console.log(`Updated in total: ${total} articles`);
+
 }
 
 module.exports = updateDB
