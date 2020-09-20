@@ -22,7 +22,7 @@ const Main = (props) => {
     )
     return (
         <>
-            <Header></Header>
+            <Header />
             <div className="content">
                 <Switch>
                     <Route exact path={`/articles`} component={ArticleList}></Route>
