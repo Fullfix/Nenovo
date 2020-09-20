@@ -21,7 +21,7 @@ nav {
     transition: 1s;
 }
 .logo h1 {
-    margin-top: 14px;
+    margin-top: 18px;
     margin-bottom: 0px;
     display: inline-block;
 }
@@ -46,31 +46,36 @@ nav {
 .user {
     position: absolute;
     display: flex;
-    right: 80px;
+    right: 60px;
     top: 5px;
 }
 .user p {
-    border: 0;
-    background: 0;
+    border: none;
+    background: transparent;
     cursor: pointer;
     margin-top: 19px;
     margin-bottom: 0px;
     display: inline-block;
     font-size: 18px;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .user-div {
     position: absolute;
     right: 20px;
     top: 5px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-top: 0;
 }
 .user-div:hover {
     cursor: pointer;
 }
 .user-div img {
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
 }
 .user button:focus {
     outline: none;

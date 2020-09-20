@@ -14,6 +14,12 @@ router.get('/all', async (req, res, next) => {
     }
 });
 
+router.get('/me', auth, async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    res.data = user;
+    return next();
+})
+
 // authentication
 router.post('/signin', async (req, res, next) => {
     if (!req.body.email || !req.body.password) {
@@ -64,7 +70,7 @@ router.post('/signup', async (req, res, next) => {
     }
 })
 
-router.put('/changekeywords', async (req, res, next) => {
+router.put('/changekeywords', auth, async (req, res, next) => {
     if (!req.body.keywords) {
         res.data = { err: 'Missing keywords' };
         return next();

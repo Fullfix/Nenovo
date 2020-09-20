@@ -35,10 +35,10 @@ const Header = () => {
                 <Link to='/articles' className="recom"><p id="articles">Новости</p></Link>
             </div>
             <div className="logo-place lo user">
-                <p>Профиль</p>
+                <p>Настройки</p>
             </div>
-            <Link to='/profile' className="user-div">
-                <img src="/user.png" alt="user" className="user-img" />
+            <Link to='/settings' className="user-div">
+                <img src="/settings.png" alt="settings" className="user-img" />
             </Link>
             <Anime className='stick '
             {...coordsMap[pathname]}
